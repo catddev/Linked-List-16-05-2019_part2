@@ -10,6 +10,8 @@ int main() {
 		l.push_front(200);
 		l.push_front(500);
 		l.insert_by_pos(777, 3);
+		l.insert_by_pos(888, 4);
+		l.del_by_pos(3);
 		//l.pop_front();
 		//l.pop_back();
 

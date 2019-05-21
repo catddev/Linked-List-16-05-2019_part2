@@ -56,7 +56,7 @@ public:
 	void insert_by_pos(T el, int pos);
 	void pop_front();
 	void pop_back();
-	//void del_by_pos(T el, int pos);
+	void del_by_pos(int pos);
 	void dump();
 
 };
@@ -156,20 +156,22 @@ inline void List<T>::push_front(T el)
 template<typename T>
 inline void List<T>::insert_by_pos(T el, int pos)
 {
-	
 	Node *cur_ptr = firstPtr;
-	
 	int counter = 0;
 
-	if (pos >= 0 && pos < size) {
-		while (counter != pos - 1) {//до предыдущего
+	if (pos == 0)
+		push_front(el);
+	else if (pos == size - 1)
+		push_back(el);
+	else if (pos > 0 && pos < size) {
+		while (counter != pos - 1) {//до предыдущего идем, т.е. занимаем позицию между pos-1 и pos
 			cur_ptr = cur_ptr->getNextPtr();
 			counter++;
 		}
-		cur_ptr = cur_ptr->getNextPtr();
-		Node insert(el, cur_ptr);
-		insert.getNextPtr() = cur_ptr->getNextPtr();
-		cur_ptr = insert.getNextPtr();
+		Node *newPtr = new Node(el, NULL);//указатель на новый узел, содержащий элемент типа Т и пустой указатель
+
+		newPtr->getNextPtr() = cur_ptr->getNextPtr();//пустой указатель будет указывать на текущий Node[pos], который становится Node[pos+1]
+		cur_ptr->getNextPtr() = newPtr;//Node[pos-1] будет указывать на добавленный узел, который теперь стал Node[pos]
 		
 		size++;
 	}
@@ -201,9 +203,39 @@ inline void List<T>::pop_back()
 			cur_ptr = cur_ptr->getNextPtr();//переставляем на следующий
 		}
 		lastPtr = cur_ptr;//переставляем ластПтр на ПРЕДпоследний
-		delete tmp_lastPtr;//удаляем сам старый ЛастПтр
+		delete tmp_lastPtr;//удаляем сам старый ЛастПтр, т.е. область памяти под ним
 		size--;
 	}
+	else
+		cout << "Trying to delete from empty list" << endl;
+}
+
+template<typename T>
+inline void List<T>::del_by_pos(int pos)
+{
+	if (size != 0) {
+		if (pos == 0)
+			pop_front();
+		else if (pos == size - 1)
+			pop_back();
+		else if (pos > 0 && pos < size) {
+
+			Node*cur_ptr = firstPtr;
+			int counter = 0;
+
+			while (counter != pos-1) {
+				cur_ptr = cur_ptr->getNextPtr();
+				counter++;
+			}
+			Node* tmp_ptr = cur_ptr->getNextPtr();
+			cur_ptr->getNextPtr() = cur_ptr->getNextPtr()->getNextPtr();
+			
+			delete tmp_ptr;
+			size--;
+		}
+	}
+	else
+		cout << "Trying to delete from empty list" << endl;
 }
 
 template<typename T>
