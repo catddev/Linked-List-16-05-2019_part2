@@ -228,6 +228,7 @@ inline void List<T>::del_by_pos(int pos)
 				counter++;
 			}
 			Node* tmp_ptr = cur_ptr->getNextPtr();
+			//здесь важно, что переставляем не сам указатель cur_ptr,а именно указатель возвращаемый от него функцией getNextPtr()! Это два совершенно разных указателя
 			cur_ptr->getNextPtr() = cur_ptr->getNextPtr()->getNextPtr();
 			
 			delete tmp_ptr;
