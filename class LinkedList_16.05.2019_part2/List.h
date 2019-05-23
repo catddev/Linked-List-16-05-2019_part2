@@ -5,13 +5,13 @@
 using namespace std;
 
 //для улавливания ошибок
-class my_exception : public exception {
+class my_exception : public exception {//наледуем от готового класса
 public:
-	virtual const char* what() const throw()
+	virtual const char* what() const throw() //просто перегружаем метод what()
 	{
 		return "out of range\n";
 	}
-	int ErrorCode() {
+	int ErrorCode() {//прописываем свой метод ErrorCode()
 		return 404;
 	}
 }my_ex;
