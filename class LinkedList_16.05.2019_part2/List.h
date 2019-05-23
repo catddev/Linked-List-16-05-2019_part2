@@ -154,15 +154,18 @@ inline void List<T>::push_front(T el)
 }
 
 template<typename T>
-inline void List<T>::insert_by_pos(T el, int pos)
+inline void List<T>::insert_by_pos(T el, int pos)throw()
 {
 	Node *cur_ptr = firstPtr;
 	int counter = 0;
 
 	if (pos == 0)
 		push_front(el);
-	else if (pos == size - 1)
+	else if (pos == size)
 		push_back(el);
+	//обработка исключений
+	else if (pos<0 || pos>size)
+		throw out_of_range("out of range\n");
 	else if (pos > 0 && pos < size) {
 		while (counter != pos - 1) {//до предыдущего идем, т.е. занимаем позицию между pos-1 и pos
 			cur_ptr = cur_ptr->getNextPtr();
@@ -216,8 +219,11 @@ inline void List<T>::del_by_pos(int pos)
 	if (size != 0) {
 		if (pos == 0)
 			pop_front();
-		else if (pos == size - 1)
+		else if (pos == size)
 			pop_back();
+		//обработка исключений
+		else if (pos<0 || pos>size)
+			throw out_of_range("out of range\n");
 		else if (pos > 0 && pos < size) {
 
 			Node*cur_ptr = firstPtr;

@@ -15,6 +15,17 @@ int main() {
 		//l.pop_front();
 		//l.pop_back();
 
+		try {
+			cout << "list size: " << l.getSize() << endl << endl;
+			//.insert_by_pos(999, -3);
+			//l.insert_by_pos(999, 8);
+			//l.insert_by_pos(999, 6);
+			l.del_by_pos(-2);
+		}
+		catch (out_of_range err) {
+			cout << err.what() << endl;
+		}
+
 		l.dump();
 		cout << endl;
 		for (int i = l.getSize(); i > 0; i--)
