@@ -219,10 +219,10 @@ inline void List<T>::del_by_pos(int pos)
 	if (size != 0) {
 		if (pos == 0)
 			pop_front();
-		else if (pos == size)
+		else if (pos == size-1)
 			pop_back();
 		//обработка исключений
-		else if (pos<0 || pos>size)
+		else if (pos<0 || pos>=size)
 			throw out_of_range("out of range\n");
 		else if (pos > 0 && pos < size) {
 
